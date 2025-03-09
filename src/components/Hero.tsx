@@ -33,7 +33,7 @@ const Hero = () => {
                         </p>
 
                         <p className="text-lg mt-2">
-                            Every week, we pick a new game and create a challenge within the game to prove their gaming superiority over each other. Challenges have included Speedruns, Permadeath runs, competitive multiplayer, football, and much more.
+                            Every week, we pick a new game and create a challenge within the game to prove their gaming superiority over each other. Challenges have included Speedruns, Permadeath runs, competitive multiplayer, sports, and much more.
                         </p>
                     </div>
                 </div>
