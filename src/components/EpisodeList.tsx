@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import EpisodeCard from "./EpisodeCard";
 
@@ -14,6 +14,7 @@ const episodes = [
 const EpisodeList = () => {
     const [startIndex, setStartIndex] = useState(0);
     const visibleEpisodes = 3; // Number of visible episodes at a time
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     const nextSlide = () => {
         if (startIndex + visibleEpisodes < episodes.length) {
@@ -42,8 +43,11 @@ const EpisodeList = () => {
                     </button>
                 )}
 
-                {/* Grid layout for episodes */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 overflow-hidden">
+                {/* Episode Grid - Now Scrollable */}
+                <div
+                    ref={scrollRef}
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 overflow-x-auto"
+                >
                     {episodes.slice(startIndex, startIndex + visibleEpisodes).map((ep, index) => (
                         <EpisodeCard key={index} {...ep} />
                     ))}

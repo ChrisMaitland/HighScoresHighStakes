@@ -1,136 +1,66 @@
-import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { useState, useRef } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import EpisodeCard from "./EpisodeCard";
 
-const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const episodes = [
+    { episodeNumber: 1, title: "The Future of Gaming", description: "We discuss the latest gaming trends." },
+    { episodeNumber: 2, title: "Retro Gaming Gems", description: "A nostalgic look at classic games." },
+    { episodeNumber: 3, title: "Top 5 RPGs of All Time", description: "Our picks for the best RPGs ever made." },
+    { episodeNumber: 4, title: "Esports Revolution", description: "How esports changed competitive gaming." },
+    { episodeNumber: 5, title: "Gaming Myths & Legends", description: "Exploring famous gaming myths." },
+    { episodeNumber: 6, title: "Game Developers Tell All", description: "Behind the scenes with game devs." },
+];
+
+const EpisodeList = () => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    const scrollLeft = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        }
+    };
+
+    const scrollRight = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        }
+    };
 
     return (
-        <nav className="flex justify-between items-center py-4 px-6 bg-playstationDark shadow-md">
-            <div className="container mx-auto flex justify-between items-center flex-wrap">
-                {/* Logo */}
-                <a href={"Home.tsx"} className="text-2xl font-bold">
-                    <img src="/hshslogo.jpg" alt="High Scores High Stakes" className="w-12 h-12" />
-                </a>
+        <section className="container mx-auto py-12 px-4">
+            <h2 className="text-3xl text-white font-bold text-center mb-6">Latest Episodes</h2>
 
-                {/* Navbar Title (Changes to HSHS on small screens) */}
-                <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-blue-300 tracking-wide">
-                    <span className="block md:hidden">HSHS</span>
-                    <span className="hidden md:block">HIGH SCORES HIGH STAKES</span>
-                </h1>
+            <div className="relative">
+                {/* Left Arrow */}
+                <button
+                    className="absolute left-0 z-10 p-3 bg-black/50 text-white rounded-full shadow-md hover:bg-black/80 transition"
+                    onClick={scrollLeft}
+                >
+                    <FaChevronLeft size={24} />
+                </button>
 
-                {/* Desktop Menu */}
-                <ul className="hidden md:flex space-x-4 relative">
-                    <li className="relative p-4">
-                        <a href="#" className="relative z-10 hover:text-playstationLightBlue">
-                            Home
-                        </a>
-                        <img
-                            src="/Circle.png"
-                            alt="Circle"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:block"
-                        />
-                    </li>
-                    <li className="relative p-4">
-                        <a href="#" className="relative z-10 hover:text-playstationLightBlue">
-                            Episodes
-                        </a>
-                        <img
-                            src="/Square.png"
-                            alt="Square"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:block"
-                        />
-                    </li>
-                    <li className="relative p-4">
-                        <a href="#" className="relative z-10 hover:text-playstationLightBlue">
-                            About
-                        </a>
-                        <img
-                            src="/Cross.png"
-                            alt="Cross"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:block"
-                        />
-                    </li>
-                    <li className="relative p-4">
-                        <a href="#" className="relative z-10 hover:text-playstationLightBlue">
-                            Contact
-                        </a>
-                        <img
-                            src="/Triangle.png"
-                            alt="Triangle"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:block"
-                        />
-                    </li>
-                </ul>
+                {/* Scrollable Episode List */}
+                <div
+                    ref={scrollRef}
+                    className="flex space-x-6 overflow-x-auto scrollbar p-2"
+                >
+                    {episodes.map((ep, index) => (
+                        <div key={index} className="flex-shrink-0 w-80">
+                            <EpisodeCard {...ep} />
+                        </div>
+                    ))}
+                </div>
 
-                {/* Mobile Menu Button */}
-                <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
-                    {isOpen ? <FaTimes /> : <FaBars />}
+                {/* Right Arrow */}
+                <button
+                    className="absolute right-0 z-10 p-3 bg-black/50 text-white rounded-full shadow-md hover:bg-black/80 transition"
+                    onClick={scrollRight}
+                >
+                    <FaChevronRight size={24} />
                 </button>
             </div>
-
-            {/* Mobile Menu */}
-            <div className={`${isOpen ? "block" : "hidden"} md:hidden w-full`}>
-                <ul className="bg-playstationDark w-full text-center flex flex-col">
-                    <li className="relative p-4 border-b border-gray-700">
-                        <a
-                            href="#"
-                            onClick={() => setIsOpen(false)}
-                            className="relative z-10"
-                        >
-                            Home
-                        </a>
-                        <img
-                            src="/Circle.png"
-                            alt="Circle"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:hidden"
-                        />
-                    </li>
-                    <li className="relative p-4 border-b border-gray-700">
-                        <a
-                            href="#"
-                            onClick={() => setIsOpen(false)}
-                            className="relative z-10"
-                        >
-                            Episodes
-                        </a>
-                        <img
-                            src="/Square.png"
-                            alt="Square"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:hidden"
-                        />
-                    </li>
-                    <li className="relative p-4 border-b border-gray-700">
-                        <a
-                            href="#"
-                            onClick={() => setIsOpen(false)}
-                            className="relative z-10"
-                        >
-                            About
-                        </a>
-                        <img
-                            src="/Cross.png"
-                            alt="Cross"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:hidden"
-                        />
-                    </li>
-                    <li className="relative p-4">
-                        <a
-                            href="#"
-                            onClick={() => setIsOpen(false)}
-                            className="relative z-10"
-                        >
-                            Contact
-                        </a>
-                        <img
-                            src="/Triangle.png"
-                            alt="Triangle"
-                            className="absolute inset-0 w-full h-full object-contain opacity-30 md:hidden"
-                        />
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        </section>
     );
 };
 
-export default Navbar;
+export default EpisodeList;
