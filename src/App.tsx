@@ -21,8 +21,8 @@ function App() {
 
 
             </div>
-            <EpisodeList />
-            <Footer />
+            {/*<EpisodeList />
+            <Footer />*/}
         </div>
     );
 }

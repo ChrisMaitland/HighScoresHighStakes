@@ -1,5 +1,3 @@
-import { useState, useRef } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import EpisodeCard from "./EpisodeCard";
 
 const episodes = [
@@ -12,58 +10,19 @@ const episodes = [
 ];
 
 const EpisodeList = () => {
-    const [startIndex, setStartIndex] = useState(0);
-    const visibleEpisodes = 3; // Number of visible episodes at a time
-    const scrollRef = useRef<HTMLDivElement>(null);
-
-    const nextSlide = () => {
-        if (startIndex + visibleEpisodes < episodes.length) {
-            setStartIndex(startIndex + 1);
-        }
-    };
-
-    const prevSlide = () => {
-        if (startIndex > 0) {
-            setStartIndex(startIndex - 1);
-        }
-    };
-
     return (
-        <section className="container mx-auto py-12 px-4">
-            <h2 className="text-3xl text-white font-bold text-center mb-6">Latest Episodes</h2>
+        <div className="w-screen px-4">
+            <h2 className="text-3xl text-blue-200 font-bold text-center mb-6">Latest Episodes</h2>
 
-            <div className="relative">
-                {/* Left Arrow - Hidden if at start */}
-                {startIndex > 0 && (
-                    <button
-                        className="absolute left-0 z-10 p-3 bg-black/50 text-white rounded-full shadow-md hover:bg-black/80 transition"
-                        onClick={prevSlide}
-                    >
-                        <FaChevronLeft size={24} />
-                    </button>
-                )}
-
-                {/* Episode Grid - Now Scrollable */}
-                <div
-                    ref={scrollRef}
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 overflow-x-auto"
-                >
-                    {episodes.slice(startIndex, startIndex + visibleEpisodes).map((ep, index) => (
-                        <EpisodeCard key={index} {...ep} />
-                    ))}
-                </div>
-
-                {/* Right Arrow - Hidden if at end */}
-                {startIndex + visibleEpisodes < episodes.length && (
-                    <button
-                        className="absolute right-0 z-10 p-3 bg-black/50 text-white rounded-full shadow-md hover:bg-black/80 transition"
-                        onClick={nextSlide}
-                    >
-                        <FaChevronRight size={24} />
-                    </button>
-                )}
+            {/* Scrollable Episode List */}
+            <div className="overflow-x-auto flex space-x-6 p-2">
+                {episodes.map((ep, index) => (
+                    <div key={index} className="flex-shrink-0 w-80">
+                        <EpisodeCard {...ep} />
+                    </div>
+                ))}
             </div>
-        </section>
+        </div>
     );
 };
 
